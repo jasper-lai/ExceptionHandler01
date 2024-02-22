@@ -15,7 +15,8 @@ namespace ExceptionHandler01.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            throw new Exception("!!! custom exception !!!");
+            //return View();
         }
 
         public IActionResult Privacy()

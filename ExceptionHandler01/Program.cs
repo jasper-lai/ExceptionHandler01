@@ -1,7 +1,14 @@
+using ExceptionHandler01.Middlewares;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+#region (jasper) register GlobalExceptionHandler and ProblemDeatils to DI
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+#endregion
 
 var app = builder.Build();
 
@@ -17,6 +24,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// (jasper) use default exception handler
+app.UseExceptionHandler();
 
 app.UseAuthorization();
 

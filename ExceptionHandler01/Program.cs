@@ -25,6 +25,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//// (jasper) use custom exception handler
+//app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 // (jasper) use default exception handler
 app.UseExceptionHandler();
 

@@ -1,31 +1,38 @@
 ﻿namespace ExceptionHandler01.Middlewares
 {
-    using Microsoft.AspNetCore.Diagnostics;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using System;
+    using System.Net;
+    using System.Text.Json;
     using System.Threading;
-    using System.Threading.Tasks;
 
-    public class GlobalExceptionHandler : IExceptionHandler
+    public class ExceptionHandlingMiddleware
     {
-        private readonly ILogger<GlobalExceptionHandler> _logger;
+        private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-        public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
+        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
         {
+            _next = next;
             _logger = logger;
         }
 
-        public async ValueTask<bool> TryHandleAsync(
-            HttpContext context, 
-            Exception exception, 
-            CancellationToken cancellationToken)
+        public async Task InvokeAsync(HttpContext context)
         {
-            // !!! the routeData is always null  !!!
+            try
+            {
+                await _next(context);
+            }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(context, ex);
+            }
+        }
+
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        {
             var routeData = context.GetRouteData();
             var controllerName = routeData?.Values["controller"]?.ToString();
             var actionName = routeData?.Values["action"]?.ToString();
-
             _logger.LogInformation("Controller={controller} Action={action}", controllerName, actionName);
 
             var response = new ProblemDetails()
@@ -38,8 +45,8 @@
 
             // 
             await context.Response
-                .WriteAsJsonAsync(response, cancellationToken);
-            return true;
+                .WriteAsJsonAsync(response);
         }
+
     }
 }

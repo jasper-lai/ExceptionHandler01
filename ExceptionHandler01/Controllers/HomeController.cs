@@ -15,6 +15,7 @@ namespace ExceptionHandler01.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Hello !!!");
             throw new Exception("!!! custom exception !!!");
             //return View();
         }

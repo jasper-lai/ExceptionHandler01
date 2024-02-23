@@ -39,7 +39,7 @@
             {
                 Status = 500,
                 Title = "Internal Server Error",
-                Detail = "occurs Internal Server Error, please contact MIS",
+                Detail = exception.Message,
                 Instance = context.Request.Path,
             };
 

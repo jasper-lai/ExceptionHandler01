@@ -22,7 +22,7 @@ the related code as follows:
 
 **GlobalExceptionHandler.cs**   
 
-```json
+```csharp
 public class GlobalExceptionHandler : IExceptionHandler
 {
     private readonly ILogger<GlobalExceptionHandler> _logger;
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler : IExceptionHandler
 ```
 
 **Program.cs**   
-```json
+```csharp
 using ExceptionHandler01.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);

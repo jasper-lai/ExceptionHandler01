@@ -1,4 +1,10 @@
 
+## Status: Closed
+please see the <a href="https://stackoverflow.com/questions/78039198/cannot-get-routedata-in-iexceptionhandler-tryhandleasync-for-asp-net-core-8" target="_blank">(stakoverflow) Cannot get routeData in IExceptionHandler.TryHandleAsync() for ASP.NET Core 8</a> post.  
+Thanks for help from Jason Pan  
+> After debug the source code, I found we can't get route data in IExceptionHandler. It's by design.  
+> We can find line 143 in ExceptionHandlerMiddlewareImpl.cs file, in github is line 164. In ClearHttpContext method, it set the RouteValues to null. This is the root cause for this issue.  
+
 ## Description
 
 this is a example for testing ASP.NET Core 8 new feature: IExceptionHandler.  
@@ -111,6 +117,9 @@ app.Run();
 
 * <a href="https://stackoverflow.com/questions/78039198/cannot-get-routedata-in-iexceptionhandler-tryhandleasync-for-asp-net-core-8" target="_blank">(jasper)(stakoverflow) Cannot get routeData in IExceptionHandler.TryHandleAsync() for ASP.NET Core 8</a>  
 > this is my post on stackoverflow.  
+
+* <a href="https://learn.microsoft.com/en-us/aspnet/core/test/debug-aspnetcore-source?view=aspnetcore-8.0" target="_blank">(Microsoft) Debug .NET and ASP.NET Core source code with Visual Studio</a>  
+> provided by Jason Pan
 
 
 
